@@ -60,10 +60,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "finace-system:build:production"
+              "buildTarget": "finace-system:build:production"
             },
             "development": {
-              "browserTarget": "finace-system:build:development"
+              "buildTarget": "finace-system:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -71,7 +71,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "finace-system:build"
+            "buildTarget": "finace-system:build"
           }
         },
         "test": {
