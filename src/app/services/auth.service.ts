@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, WritableSignal, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { catchError, map, of } from 'rxjs';
 import { User } from 'src/models/user';
 
@@ -8,7 +9,11 @@ import { User } from 'src/models/user';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    private toast: ToastrService
+  ) {}
 
   user: WritableSignal<User | null> = signal(null);
 
@@ -42,5 +47,76 @@ export class AuthService {
         })
       );
     return data;
+  }
+
+  login(
+    email: string,
+    password: string,
+    loaidng: WritableSignal<boolean>,
+    error: WritableSignal<{ email: string; password: string; gen: string }>
+  ) {
+    const data = this.httpClient.post(
+      'https://finace-system-backend.onrender.com/auth/login',
+      {
+        email: email,
+        password: password,
+      }
+    );
+
+    data.subscribe(
+      (data: any) => {
+        const { token } = data;
+
+        localStorage.setItem('token', token);
+        this.getUser();
+        this.toast.success('login successfull');
+        this.router.navigateByUrl('/');
+        loaidng.set(false);
+      },
+      (err) => {
+        console.log(err);
+        this.toast.error(err.error);
+        loaidng.set(false);
+      }
+    );
+  }
+
+  register(
+    email: string,
+    password: string,
+    name: string,
+    loaidng: WritableSignal<boolean>,
+    error: WritableSignal<{
+      email: string;
+      password: string;
+      gen: string;
+      name: string;
+    }>
+  ) {
+    const data = this.httpClient.post(
+      'https://finace-system-backend.onrender.com/auth/register',
+      {
+        email: email,
+        password: password,
+        name: name,
+      }
+    );
+
+    data.subscribe(
+      (data: any) => {
+        const { token } = data;
+
+        localStorage.setItem('token', token);
+        this.getUser();
+        this.toast.success('register successfull');
+        this.router.navigateByUrl('/');
+        loaidng.set(false);
+      },
+      (err) => {
+        console.log(err);
+        this.toast.error(err.error);
+        loaidng.set(false);
+      }
+    );
   }
 }

@@ -1,16 +1,16 @@
 <div class="flex flex-row gap-2 justify-between items-center w-full h-[100vh]">
   <div class="flex flex-col justify-center items-center w-full h-full gap-2">
-    <span class="text-lg font-bold">Welcome Back</span>
+    <span class="text-lg font-bold">Welcome</span>
     <span class="text-sm dark:text-neutral-600 text-neutral-300"
-      >Log in or create an account to see your dashbourd</span
+      >create an account to see your dashbourd</span
     >
     <form
       [formGroup]="form"
       class="flex flex-col w-[90%] h-fit shadow-sm shadow-black gap-5 rounded-md justify-center items-center p-2"
     >
-      <span class="text-lg font-bold">Welcome Back To Finacee</span>
+      <span class="text-lg font-bold">Welcome To Finacee</span>
       <span class="text-sm dark:text-neutral-600 text-neutral-300"
-        >Log in or create an account to see your dashbourd</span
+        >create an account to see your dashbourd</span
       >
       <div class="flex flex-col gap-2 justify-start items-start w-full">
         <span>Email</span>
@@ -26,6 +26,19 @@
       </div>
 
       <div class="flex flex-col gap-2 justify-start items-start w-full">
+        <span>Name</span>
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="eg. jack Smith"
+          class="bg-transparent dark:border-black border-neutral-300 outline-none rounded-md w-full border-[1px] p-2"
+        />
+        <span *ngIf="error().name !== ''" class="text-sm text-red-500">{{
+          error().name
+        }}</span>
+      </div>
+
+      <div class="flex flex-col gap-2 justify-start items-start w-full">
         <span>Password</span>
         <input
           type="password"
@@ -36,19 +49,16 @@
         <span *ngIf="error().password !== ''" class="text-sm text-red-500">{{
           error().password
         }}</span>
-        <span class="self-end cursor-pointer text-sm text-blue-500"
-          >forgot Password</span
-        >
       </div>
       <button
         (click)="submit()"
         class="w-[100%] rounded-md p-2 dark:bg-black bg-neutral-300 flex flex-row justify-center items-center gap-2"
       >
         <hlm-spinner *ngIf="loading()" />
-        <span>Login</span>
+        <span>Register</span>
       </button>
-      <span routerLink="/register" class="text-blue-500 cursor-pointer text-lg"
-        >don't have an account? Register</span
+      <span routerLink="/login" class="text-blue-500 cursor-pointer text-lg"
+        >have an account? Register</span
       >
     </form>
   </div>
