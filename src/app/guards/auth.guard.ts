@@ -14,6 +14,7 @@ import {
   UrlSegment,
 } from '@angular/router';
 import { catchError, map, of } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,11 @@ import { catchError, map, of } from 'rxjs';
 export class AuthGuard
   implements CanActivate, CanActivateChild, CanDeactivate<unknown>, CanMatch
 {
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    private authService: AuthService
+  ) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -32,6 +37,7 @@ export class AuthGuard
       return false;
     }
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.authService.loading.set(true);
     try {
       const data = this.httpClient
         .get('https://finace-system-backend.onrender.com/auth/', {
@@ -40,21 +46,27 @@ export class AuthGuard
         .pipe(
           map((data) => {
             console.log(data);
+
             if (!data) {
+              this.authService.loading.set(false);
               return false;
             } else {
+              this.authService.loading.set(false);
               return true;
             }
           }),
           catchError((err) => {
             this.router.navigateByUrl('/login');
+            this.authService.loading.set(false);
             return of(false);
           })
         );
+      this.authService.loading.set(false);
       return data;
     } catch (err) {
       console.log(err);
       this.router.navigateByUrl('/login');
+      this.authService.loading.set(false);
       return false;
     }
   }

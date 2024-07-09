@@ -16,6 +16,27 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { HlmSpinnerComponent } from '@spartan-ng/ui-spinner-helm';
 import { RegisterComponent } from './pages/register/register.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { LogoComponent } from './components/logo/logo.component';
+import { ProfilePhotoComponent } from './components/profile-photo/profile-photo.component';
+
+import {
+  HlmAvatarImageDirective,
+  HlmAvatarComponent,
+  HlmAvatarFallbackDirective,
+} from '@spartan-ng/ui-avatar-helm';
+import { BrnMenuTriggerDirective } from '@spartan-ng/ui-menu-brain';
+import {
+  HlmMenuComponent,
+  HlmMenuGroupComponent,
+  HlmMenuItemDirective,
+  HlmMenuItemIconDirective,
+  HlmMenuItemSubIndicatorComponent,
+  HlmMenuLabelComponent,
+  HlmMenuSeparatorComponent,
+  HlmMenuShortcutComponent,
+  HlmSubMenuComponent,
+} from '@spartan-ng/ui-menu-helm';
 
 @NgModule({
   declarations: [
@@ -24,8 +45,24 @@ import { RegisterComponent } from './pages/register/register.component';
     LoginComponent,
     HomeComponent,
     RegisterComponent,
+    NavbarComponent,
+    LogoComponent,
+    ProfilePhotoComponent,
   ],
   imports: [
+    HlmAvatarImageDirective,
+    HlmAvatarComponent,
+    HlmAvatarFallbackDirective,
+    HlmMenuComponent,
+    HlmMenuGroupComponent,
+    HlmMenuItemDirective,
+    HlmMenuItemIconDirective,
+    HlmMenuItemSubIndicatorComponent,
+    HlmMenuLabelComponent,
+    HlmMenuSeparatorComponent,
+    HlmMenuShortcutComponent,
+    BrnMenuTriggerDirective,
+    HlmSubMenuComponent,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

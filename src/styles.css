@@ -19,6 +19,23 @@ body {
   filter: drop-shadow(2px 5px 12px #000000);
 }
 
+.active {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5.6px);
+  -webkit-backdrop-filter: blur(5.6px);
+}
+
+.lk:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5.6px);
+  -webkit-backdrop-filter: blur(5.6px);
+}
+
 :root {
   --background: 0 0% 100%;
   --foreground: 224 71.4% 4.1%;

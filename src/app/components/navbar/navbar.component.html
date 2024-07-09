@@ -1,0 +1,102 @@
+@if (user !== null) {
+<div
+  class="w-full h-[60px] bg-transparent flex-row justify-between items-center md:flex hidden gap-2"
+>
+  <div class="flex flex-row items-center justify-between gap-2">
+    <app-logo></app-logo>
+    <button
+      routerLinkActive="active"
+      routerLink="/"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="p-2 rounded-md lk hover:active transition-all ease-in-out duration-200"
+    >
+      Overview
+    </button>
+
+    <button
+      routerLinkActive="active"
+      routerLink="/transactions"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="p-2 rounded-md lk transition-all ease-in-out duration-200"
+    >
+      Transactions
+    </button>
+
+    <button
+      routerLinkActive="active"
+      routerLink="/accounts"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="p-2 rounded-md lk transition-all ease-in-out duration-200"
+    >
+      Accounts
+    </button>
+
+    <button
+      routerLinkActive="active"
+      routerLink="/categories"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="p-2 rounded-md lk transition-all ease-in-out duration-200"
+    >
+      Categories
+    </button>
+
+    <button
+      routerLinkActive="active"
+      routerLink="/settings"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="p-2 rounded-md lk transition-all ease-in-out duration-200"
+    >
+      Settings
+    </button>
+  </div>
+  <app-profile-photo [brnMenuTriggerFor]="lap" />
+</div>
+
+<div
+  class="w-full h-[60px] bg-transparent flex-row justify-between items-center flex md:hidden gap-2"
+>
+  <div class="flex flex-row items-center justify-between gap-2">
+    <app-logo></app-logo>
+  </div>
+  <app-profile-photo [brnMenuTriggerFor]="mob" />
+</div>
+}
+
+<ng-template #lap>
+  <hlm-menu>
+    <hlm-menu-label>Profile</hlm-menu-label>
+    <hlm-menu-separator />
+    <hlm-menu-group>
+      <button hlmMenuItem [brnMenuTriggerFor]="theme">Theme</button>
+      <hlm-menu-separator></hlm-menu-separator>
+      <button hlmMenuItem (click)="logout()">Logout</button>
+    </hlm-menu-group>
+  </hlm-menu>
+</ng-template>
+
+<ng-template #mob>
+  <hlm-menu>
+    <hlm-menu-label>Profile</hlm-menu-label>
+    <hlm-menu-separator />
+    <hlm-menu-group>
+      <button hlmMenuItem [brnMenuTriggerFor]="theme">Theme</button>
+      <hlm-menu-separator></hlm-menu-separator>
+      <button hlmMenuItem routerLink="/">overview</button>
+      <button hlmMenuItem routerLink="/accounts">Accounts</button>
+      <button hlmMenuItem routerLink="/transactions">Transactions</button>
+      <button hlmMenuItem routerLink="/categories">categories</button>
+      <button hlmMenuItem routerLink="/settings">settings</button>
+      <hlm-menu-separator></hlm-menu-separator>
+      <button hlmMenuItem (click)="logout()">Logout</button>
+    </hlm-menu-group>
+  </hlm-menu>
+</ng-template>
+
+<ng-template #theme>
+  <hlm-menu>
+    <hlm-menu-group>
+      <button hlmMenuItem (click)="setLight()">Light</button>
+      <button hlmMenuItem (click)="setDarkTheme()">Dark</button>
+    </hlm-menu-group>
+  </hlm-menu>
+</ng-template>

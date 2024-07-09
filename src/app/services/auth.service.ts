@@ -16,6 +16,8 @@ export class AuthService {
   ) {}
 
   user: WritableSignal<User | null> = signal(null);
+  loading = signal(false);
+  userLoading = signal(false);
 
   setUser(value: User | null) {
     this.user.set(value);
@@ -25,28 +27,27 @@ export class AuthService {
     const token = localStorage.getItem('token');
     if (!token) {
       this.user.set(null);
+      return;
     }
+    this.userLoading.set(true);
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const data = this.httpClient
-      .get('https://finace-system-backend.onrender.com/auth/', {
+    const data = this.httpClient.get(
+      'https://finace-system-backend.onrender.com/auth/',
+      {
         headers: header,
-      })
-      .pipe(
-        map((data) => {
-          if (!data) {
-            this.user.set(null);
-            return false;
-          } else {
-            this.user.set(data as User);
-            return true;
-          }
-        }),
-        catchError((err) => {
-          this.user.set(null);
-          return of(false);
-        })
-      );
-    return data;
+      }
+    );
+
+    data.subscribe(
+      (data) => {
+        this.userLoading.set(false);
+        this.user.set(data as User);
+      },
+      (Err) => {
+        this.userLoading.set(false);
+        this.user.set(null);
+      }
+    );
   }
 
   login(
@@ -75,7 +76,7 @@ export class AuthService {
       },
       (err) => {
         console.log(err);
-        this.toast.error(err.error);
+        this.toast.error(JSON.stringify(err.error));
         loaidng.set(false);
       }
     );
@@ -114,9 +115,15 @@ export class AuthService {
       },
       (err) => {
         console.log(err);
-        this.toast.error(err.error);
+        this.toast.error(JSON.stringify(err.error));
         loaidng.set(false);
       }
     );
+  }
+
+  logout() {
+    this.user.set(null);
+    localStorage.removeItem('token');
+    this.router.navigateByUrl('/login');
   }
 }

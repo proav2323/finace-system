@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -8,8 +8,14 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   title = 'finace-system';
+  loading = false;
+  userLoading = false;
 
   constructor(private authSevice: AuthService) {
     this.authSevice.getUser();
+    effect(() => {
+      this.loading = this.authSevice.loading();
+      this.userLoading = this.authSevice.userLoading();
+    });
   }
 }
