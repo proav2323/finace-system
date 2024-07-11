@@ -33,6 +33,7 @@ import {
   HlmMenuItemIconDirective,
   HlmMenuItemSubIndicatorComponent,
   HlmMenuLabelComponent,
+  HlmMenuModule,
   HlmMenuSeparatorComponent,
   HlmMenuShortcutComponent,
   HlmSubMenuComponent,
@@ -40,7 +41,11 @@ import {
 import { DateRangePickerComponent } from './components/date-range-picker/date-range-picker.component';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { uk_UA } from 'ng-zorro-antd/i18n';
-import { registerLocaleData } from '@angular/common';
+import {
+  DecimalPipe,
+  registerLocaleData,
+  TitleCasePipe,
+} from '@angular/common';
 import uk from '@angular/common/locales/uk';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -49,8 +54,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { provideIcons } from '@ng-icons/core';
 import {
   lucideArrowDown,
+  lucideArrowUpDown,
   lucideChevronDown,
   lucideChevronUp,
+  lucideMoreHorizontal,
 } from '@ng-icons/lucide';
 import { BrnSelectImports, BrnSelectModule } from '@spartan-ng/ui-select-brain';
 import {
@@ -60,6 +67,16 @@ import {
 } from '@spartan-ng/ui-select-helm';
 import { HlmIconComponent } from '../lib/ui-icon-helm/src/lib/hlm-icon.component';
 import { HlmIconModule } from 'src/lib/ui-icon-helm/src';
+import { TransactionsComponent } from './pages/transactions/transactions.component';
+import { BrnTableModule } from '@spartan-ng/ui-table-brain';
+import { HlmTableModule } from 'src/lib/ui-table-helm/src';
+import { HlmButtonModule } from 'src/lib/ui-button-helm/src';
+import { HlmInputDirective } from 'src/lib/ui-input-helm/src';
+import {
+  HlmCheckboxCheckIconComponent,
+  HlmCheckboxComponent,
+} from 'src/lib/ui-checkbox-helm/src';
+import { TransdataComponent } from './components/transdata/transdata.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +89,8 @@ import { HlmIconModule } from 'src/lib/ui-icon-helm/src';
     LogoComponent,
     ProfilePhotoComponent,
     DateRangePickerComponent,
+    TransactionsComponent,
+    TransdataComponent,
   ],
   imports: [
     HlmAvatarImageDirective,
@@ -101,6 +120,25 @@ import { HlmIconModule } from 'src/lib/ui-icon-helm/src';
     MatButtonModule,
     HlmIconComponent,
     HlmIconModule,
+    BrnMenuTriggerDirective,
+    HlmMenuModule,
+
+    BrnTableModule,
+    HlmTableModule,
+
+    HlmButtonModule,
+
+    DecimalPipe,
+    TitleCasePipe,
+    HlmIconComponent,
+    HlmInputDirective,
+
+    HlmCheckboxCheckIconComponent,
+    HlmCheckboxComponent,
+
+    BrnSelectModule,
+    HlmSelectModule,
+    HlmTableModule,
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
@@ -108,7 +146,12 @@ import { HlmIconModule } from 'src/lib/ui-icon-helm/src';
     provideAnimationsAsync(),
     provideHttpClient(),
     provideNativeDateAdapter(),
-    provideIcons({ lucideChevronDown, lucideChevronUp }),
+    provideIcons({
+      lucideChevronDown,
+      lucideChevronUp,
+      lucideMoreHorizontal,
+      lucideArrowUpDown,
+    }),
   ],
   bootstrap: [AppComponent],
 })

@@ -2,9 +2,14 @@
 <div class="flex flex-col w-full justify-center items-center p-2">
   <hlm-spinner></hlm-spinner>
 </div>
+} @else { @if (user !== null) {
+<app-filters> </app-filters>
+<div class="w-full h-full -mt-10 z-50">
+  <router-outlet></router-outlet>
+</div>
 } @else {
 <app-filters> </app-filters>
 <div class="w-full h-full">
   <router-outlet></router-outlet>
 </div>
-}
+} }

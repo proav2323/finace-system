@@ -1,0 +1,48 @@
+@if (loading === true) {
+<div class="flex flex-col w-full justify-center items-center p-2">
+  <hlm-spinner></hlm-spinner>
+</div>
+} @else {
+<div
+  class="w-[90%] dark:bg-neutral-800 bg-white h-fit mx-auto shadow-lg rounded-md p-2 flex flex-col gap-2"
+>
+  <app-transdata></app-transdata>
+  @if(transactions.length >= 1) {
+  <hlm-table>
+    <hlm-caption>Your Transactions</hlm-caption>
+    <hlm-trow
+      class="dark:bg-neutral-900 bg-neutral-200 rounded-t-md border-none"
+    >
+      <hlm-th>Date</hlm-th>
+      <hlm-th>Category</hlm-th>
+      <hlm-th>Payee</hlm-th>
+      <hlm-th>Amount</hlm-th>
+      <hlm-th>Account</hlm-th>
+      <hlm-th></hlm-th>
+    </hlm-trow>
+    <hlm-trow
+      *ngFor="let transaction of transactions"
+      class="dark:bg-neutral-900 bg-neutral-200 rounded-b-md border-none"
+    >
+      <hlm-th>{{ transaction.date.toString() }}</hlm-th>
+      <hlm-th>{{ transaction.category.name }}</hlm-th>
+      <hlm-th>{{ transaction.payee }}</hlm-th>
+      <hlm-th class="">{{ transaction.amount }}</hlm-th>
+      <hlm-th>{{ transaction.account.name }}</hlm-th>
+      <hlm-th><hlm-icon name="lucideMoreHorizontal" size="{{ 14 }}" /></hlm-th>
+    </hlm-trow>
+  </hlm-table>
+  } @else {
+
+  <hlm-table>
+    <hlm-trow
+      class="dark:bg-neutral-900 bg-neutral-200 rounded-t-md border-none"
+    >
+    </hlm-trow>
+    <hlm-trow class="dark:bg-neutral-900 bg-neutral-200 rounded-md border-none">
+      <hlm-th>No Results</hlm-th>
+    </hlm-trow>
+  </hlm-table>
+  }
+</div>
+}
