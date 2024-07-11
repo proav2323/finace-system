@@ -37,6 +37,29 @@ import {
   HlmMenuShortcutComponent,
   HlmSubMenuComponent,
 } from '@spartan-ng/ui-menu-helm';
+import { DateRangePickerComponent } from './components/date-range-picker/date-range-picker.component';
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { uk_UA } from 'ng-zorro-antd/i18n';
+import { registerLocaleData } from '@angular/common';
+import uk from '@angular/common/locales/uk';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
+import { provideIcons } from '@ng-icons/core';
+import {
+  lucideArrowDown,
+  lucideChevronDown,
+  lucideChevronUp,
+} from '@ng-icons/lucide';
+import { BrnSelectImports, BrnSelectModule } from '@spartan-ng/ui-select-brain';
+import {
+  HlmSelectDirective,
+  HlmSelectImports,
+  HlmSelectModule,
+} from '@spartan-ng/ui-select-helm';
+import { HlmIconComponent } from '../lib/ui-icon-helm/src/lib/hlm-icon.component';
+import { HlmIconModule } from 'src/lib/ui-icon-helm/src';
 
 @NgModule({
   declarations: [
@@ -48,6 +71,7 @@ import {
     NavbarComponent,
     LogoComponent,
     ProfilePhotoComponent,
+    DateRangePickerComponent,
   ],
   imports: [
     HlmAvatarImageDirective,
@@ -55,6 +79,9 @@ import {
     HlmAvatarFallbackDirective,
     HlmMenuComponent,
     HlmMenuGroupComponent,
+    BrnSelectModule,
+    HlmSelectDirective,
+    HlmSelectModule,
     HlmMenuItemDirective,
     HlmMenuItemIconDirective,
     HlmMenuItemSubIndicatorComponent,
@@ -70,8 +97,19 @@ import {
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     HlmSpinnerComponent,
+    MatDatepickerModule,
+    MatButtonModule,
+    HlmIconComponent,
+    HlmIconModule,
   ],
-  providers: [provideHttpClient(withInterceptorsFromDi())],
+  providers: [
+    provideHttpClient(withInterceptorsFromDi()),
+    { provide: NZ_I18N, useValue: uk_UA },
+    provideAnimationsAsync(),
+    provideHttpClient(),
+    provideNativeDateAdapter(),
+    provideIcons({ lucideChevronDown, lucideChevronUp }),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

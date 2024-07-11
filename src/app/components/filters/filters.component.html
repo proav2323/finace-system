@@ -1,5 +1,67 @@
-@if (isVisible()) {
-<div class="flex flex-col bg-[#21963c] w-full justify-center items-center p-2">
+@if (isVisible() && user !== null) {
+<div
+  class="flex flex-col bg-[#21963c] w-full justify-center items-center p-2 gap-4"
+>
   <app-navbar class="w-full" />
+  <div class="flex flex-col justify-start items-start w-full gap-4 mb-20">
+    <div class="flex flex-col gap-1">
+      <span class="font-bold text-3xl">Welcome Back {{ user.name }}</span>
+      <span class="text-sm dark:text-neutral-600 text-neutral-300"
+        >this your finacial report</span
+      >
+    </div>
+    <div
+      class="flex flex-col md:flex-row justify-start items-center gap-2 w-full"
+    >
+      <div
+        class="p-2 w-full md:w-56 relative flex flex-col justify-center items-center"
+      >
+        <div
+          #dudu
+          (click)="openn()"
+          class="rounded-md active w-full h-[65px] justify-between items-center flex flex-row p-2 cursor-pointer"
+        >
+          <span class="font-bold text-lg">{{ selected().name }}</span>
+          <hlm-icon name="lucideChevronDown" size="{{ 20 }}" />
+        </div>
+
+        <div
+          class="absolute top-[70px] md:-w-56 w-[90%] dark:bg-neutral-950 bg-neutral-300 flex flex-col rounded-md"
+          *ngIf="open() === true"
+        >
+          <span
+            (click)="change(option.value)"
+            class="w-full p-2 cursor-pointer hover:opacity-50 transition-all ease-in-out duration-200"
+            *ngFor="let option of options"
+            >{{ option.name }}</span
+          >
+        </div>
+      </div>
+
+      <div
+        class="flex flex-row justify-center items-center active p-2 rounded-md dark:text-white text-black w-full md:w-56"
+      >
+        <mat-date-range-input [rangePicker]="rangePicker" class="w-full">
+          <input matStartDate placeholder="Start date" [(ngModel)]="start" />
+          <input
+            matEndDate
+            placeholder="End date"
+            [(ngModel)]="end"
+            (dateChange)="changeH()"
+          />
+        </mat-date-range-input>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="rangePicker"
+        ></mat-datepicker-toggle>
+        <mat-date-range-picker #rangePicker>
+          <mat-date-range-picker-actions>
+            <button mat-button matDateRangePickerCancel>Cancel</button>
+            <button mat-raised-button matDateRangePickerApply>Apply</button>
+          </mat-date-range-picker-actions>
+        </mat-date-range-picker>
+      </div>
+    </div>
+  </div>
 </div>
 }
