@@ -77,6 +77,20 @@ import {
   HlmCheckboxComponent,
 } from 'src/lib/ui-checkbox-helm/src';
 import { TransdataComponent } from './components/transdata/transdata.component';
+import { AddTransComponent } from './components/add-trans/add-trans.component';
+import {
+  HlmDialogDescriptionDirective,
+  HlmDialogHeaderComponent,
+  HlmDialogService,
+  HlmDialogTitleDirective,
+} from '@spartan-ng/ui-dialog-helm';
+import {
+  HlmTableComponent,
+  HlmTdComponent,
+  HlmThComponent,
+  HlmTrowComponent,
+} from '@spartan-ng/ui-table-helm';
+import { HlmDialogComponent } from '../lib/ui-dialog-helm/src/lib/hlm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +105,7 @@ import { TransdataComponent } from './components/transdata/transdata.component';
     DateRangePickerComponent,
     TransactionsComponent,
     TransdataComponent,
+    AddTransComponent,
   ],
   imports: [
     HlmAvatarImageDirective,
@@ -122,23 +137,26 @@ import { TransdataComponent } from './components/transdata/transdata.component';
     HlmIconModule,
     BrnMenuTriggerDirective,
     HlmMenuModule,
-
     BrnTableModule,
     HlmTableModule,
-
     HlmButtonModule,
-
     DecimalPipe,
     TitleCasePipe,
     HlmIconComponent,
     HlmInputDirective,
-
     HlmCheckboxCheckIconComponent,
     HlmCheckboxComponent,
-
     BrnSelectModule,
     HlmSelectModule,
     HlmTableModule,
+    HlmDialogHeaderComponent,
+    HlmDialogTitleDirective,
+    HlmDialogDescriptionDirective,
+    HlmTableComponent,
+    HlmThComponent,
+    HlmTrowComponent,
+    HlmTdComponent,
+    HlmDialogComponent,
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),

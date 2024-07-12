@@ -1,0 +1,132 @@
+@if (user !== null) {
+<hlm-dialog-header>
+  <h3 hlmDialogTitle class="dark:text-white text-black">Add Transaction</h3>
+  <p hlmDialogDescription>add new Transactions</p>
+</hlm-dialog-header>
+
+<form
+  [formGroup]="form"
+  class="flex flex-col justify-center items-center w-full h-full gap-2"
+>
+  <div class="flex flex-col gap-1 justify-start items-start w-full">
+    <label hlmLabel class="w-full"
+      >Amount
+      <input
+        class="w-full"
+        formControlName="amount"
+        hlmInput
+        type="number"
+        placeholder="Amount"
+      />
+    </label>
+    <div class="flex flex-col justify-start items-start w-full gap-2">
+      <span class="dark:text-neutral-700 text-neutral-200 text-sm">
+        - for expenses and normal for income</span
+      >
+      <span *ngIf="error().amount !== ''" class="text-sm text-red-500">{{
+        error().amount
+      }}</span>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-2 justify-start items-start w-full">
+    <label hlmLabel class="w-full"
+      >Payee
+      <input
+        formControlName="payee"
+        class="w-full"
+        hlmInput
+        type="text"
+        placeholder="Payee"
+      />
+    </label>
+    <span *ngIf="error().payee !== ''" class="text-sm text-red-500">{{
+      error().payee
+    }}</span>
+  </div>
+
+  <div class="flex flex-col gap-2 justify-start items-start w-full">
+    <label hlmLabel class="w-full"
+      >Date
+      <input
+        formControlName="date"
+        class="w-full bg-transparent border-[1px] dark:border-neutral-600 border-neutral-300 p-2 rounded-md dark:text-white text-black"
+        type="date"
+        placeholder="Date"
+      />
+    </label>
+    <span *ngIf="error().date !== ''" class="text-sm text-red-500">{{
+      error().date
+    }}</span>
+  </div>
+
+  <div class="flex flex-col gap-2 justify-start items-start w-full">
+    <span class="text-sm">Account</span>
+    <brn-select
+      formControlName="accountId"
+      class="inline-block w-full"
+      placeholder="Select an Account"
+    >
+      <hlm-select-trigger class="w-full">
+        <hlm-select-value class="w-full" />
+      </hlm-select-trigger>
+      <hlm-select-content class="w-full">
+        <hlm-option
+          value="{{ account.id }}"
+          *ngFor="let account of user.accounts"
+          >{{ account.name }}</hlm-option
+        >
+      </hlm-select-content>
+    </brn-select>
+    <span *ngIf="error().accountId !== ''" class="text-sm text-red-500">{{
+      error().accountId
+    }}</span>
+  </div>
+
+  <div class="flex flex-col gap-2 justify-start items-start w-full">
+    <span class="text-sm">Category</span>
+    <brn-select
+      formControlName="categoryId"
+      class="inline-block w-full"
+      placeholder="Select an Category"
+    >
+      <hlm-select-trigger class="w-full">
+        <hlm-select-value class="w-full" />
+      </hlm-select-trigger>
+      <hlm-select-content class="w-full">
+        <hlm-option
+          value="{{ account.id }}"
+          *ngFor="let account of user.categories"
+          >{{ account.name }}</hlm-option
+        >
+      </hlm-select-content>
+    </brn-select>
+    <span *ngIf="error().categoryId !== ''" class="text-sm text-red-500">{{
+      error().categoryId
+    }}</span>
+  </div>
+
+  <div class="flex flex-col gap-2 justify-start items-start w-full">
+    <label hlmLabel class="w-full"
+      >Notes (optional)
+      <input
+        formControlName="notes"
+        class="w-full"
+        hlmInput
+        type="text"
+        placeholder="Notes"
+      />
+    </label>
+  </div>
+
+  <button
+    hlmBtn
+    class="w-full flex flex-row justify-center items-center gap-2"
+    (click)="addTrans()"
+  >
+    <hlm-spinner *ngIf="loading === true"></hlm-spinner>
+    Submit
+  </button>
+</form>
+
+}

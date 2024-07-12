@@ -81,6 +81,10 @@ body {
   --ring: 216 12.2% 83.9%;
 }
 
+.noScroll::-webkit-scrollbar {
+  display: none;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
