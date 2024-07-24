@@ -43,12 +43,7 @@
       >
         <mat-date-range-input [rangePicker]="rangePicker" class="w-full">
           <input matStartDate placeholder="Start date" [(ngModel)]="start" />
-          <input
-            matEndDate
-            placeholder="End date"
-            [(ngModel)]="end"
-            (dateChange)="changeH()"
-          />
+          <input matEndDate placeholder="End date" [(ngModel)]="end" />
         </mat-date-range-input>
         <mat-datepicker-toggle
           matIconSuffix
@@ -57,7 +52,13 @@
         <mat-date-range-picker #rangePicker>
           <mat-date-range-picker-actions>
             <button mat-button matDateRangePickerCancel>Cancel</button>
-            <button mat-raised-button matDateRangePickerApply>Apply</button>
+            <button
+              mat-raised-button
+              matDateRangePickerApply
+              (click)="changeH()"
+            >
+              Apply
+            </button>
           </mat-date-range-picker-actions>
         </mat-date-range-picker>
       </div>

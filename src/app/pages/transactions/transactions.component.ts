@@ -1,5 +1,5 @@
 import { Component, computed, effect, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TransactionsService } from 'src/app/services/transactions.service';
 import { transactions } from 'src/models/transactions';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
@@ -17,11 +17,14 @@ export class TransactionsComponent {
   transactions: transactions[] = [];
   constructor(
     private transService: TransactionsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
-    this.route.params.subscribe((data) => {
-      this.transService.getTransactions(data);
-    });
+    const data = JSON.parse(localStorage.getItem('params') ?? '{}');
+    this.transService.getTransactions(data);
+    console.log(data);
+    this.router.events.subscribe(() => {});
+
     effect(() => {
       this.loading = this.transService.loading();
       this.transactions = this.transService.transactions();

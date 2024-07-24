@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { TransactionsService } from 'src/app/services/transactions.service';
 import { User } from 'src/models/user';
 
 @Component({
@@ -37,7 +38,8 @@ export class FiltersComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private transactionsService: TransactionsService
   ) {
     effect(
       () => {
@@ -73,43 +75,41 @@ export class FiltersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe((data) => {
-      this.params = data;
-      this.account = data['account'] ?? 'allAccounts';
+    const data = JSON.parse(localStorage.getItem('params') ?? '{}');
+    this.params = data;
+    this.account = data['account'] ?? 'allAccounts';
+    console.log(this.options);
+    if (this.user !== null) {
       console.log(this.options);
-      if (this.user !== null) {
-        console.log(this.options);
-        this.options = [];
-        this.options.push({ value: 'allAccounts', name: 'All Accounts' });
-        this.user.accounts.map((data) => {
-          this.options.push({ value: data.id, name: data.name });
-        });
-        this.selected.set(
-          this.options.find((data) => data.value === this.account) ?? {
-            value: '',
-            name: '',
-          }
-        );
-      }
+      this.options = [];
+      this.options.push({ value: 'allAccounts', name: 'All Accounts' });
+      this.user.accounts.map((data) => {
+        this.options.push({ value: data.id, name: data.name });
+      });
+      this.selected.set(
+        this.options.find((data) => data.value === this.account) ?? {
+          value: '',
+          name: '',
+        }
+      );
+    }
 
-      if (data['start']) {
-        this.start = new Date(data['start']);
-      } else {
-        this.start = new Date();
-      }
+    if (data['start']) {
+      this.start = new Date(data['start']);
+    } else {
+      this.start = new Date();
+    }
 
-      if (data['end']) {
-        this.end = new Date(data['end']);
-      } else {
-        this.end = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-      }
-    });
+    if (data['end']) {
+      this.end = new Date(data['end']);
+    } else {
+      this.end = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    }
   }
 
   adjuct(params: Params) {
-    const url = this.url().split('?');
-    console.log(url);
-    this.router.navigate([url[0]], { queryParams: params });
+    localStorage.setItem('params', JSON.stringify(params));
+    this.transactionsService.getTransactions(params);
   }
 
   changeH() {
@@ -119,6 +119,7 @@ export class FiltersComponent implements OnInit {
       account: this.params['account'] ?? 'allAccounts',
     };
     this.adjuct(params);
+    console.log(this.start.toString(), this.end.toString());
   }
 
   change(value: String) {
