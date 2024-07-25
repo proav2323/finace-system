@@ -14,6 +14,7 @@ import {
 } from '@spartan-ng/ui-dialog-brain';
 import { AuthService } from 'src/app/services/auth.service';
 import { TransactionsService } from 'src/app/services/transactions.service';
+import { transactions } from 'src/models/transactions';
 import { User } from 'src/models/user';
 
 @Component({
@@ -41,9 +42,14 @@ export class AddTransComponent {
   private readonly _dialogRef = inject<BrnDialogRef<User>>(BrnDialogRef);
   private readonly _dialogContext = injectBrnDialogContext<{
     user: User;
+    isEditing: boolean;
+    tranns?: transactions;
   }>();
 
   user = this._dialogContext.user;
+  editing = this._dialogContext.isEditing;
+  trans = this._dialogContext.tranns;
+  date = this.editing ? new Date(this.trans?.date ?? '') : null;
 
   constructor(
     private authService: AuthService,
@@ -53,6 +59,23 @@ export class AddTransComponent {
     effect(() => {
       this.loading = this.transS.loading();
     });
+    setTimeout(() => {
+      if (this.editing === true && this.trans !== undefined) {
+        this.form.controls['date'].setValue(
+          `${new Date(this.trans.date).getFullYear()}-${
+            new Date(this.trans.date).getMonth() + 1 <= 9
+              ? '0' + (new Date(this.trans.date).getMonth() + 1)
+              : new Date(this.trans.date).getMonth() + 1
+          }-${
+            new Date(this.trans.date).getDate() <= 9
+              ? '0' + new Date(this.trans.date).getDate()
+              : new Date(this.trans.date).getDate()
+          }`
+        );
+        console.log(this.form.value);
+      } else {
+      }
+    }, 2000);
     this.form.valueChanges.subscribe(() => {
       console.log(this.form.controls['accountId'].value);
       if (this.isSubmited() === true) {
@@ -151,22 +174,40 @@ export class AddTransComponent {
 
   form: FormGroup = new FormGroup({
     date: new FormControl(
-      `${new Date().getFullYear()}-${
-        new Date().getMonth() <= 9
-          ? '0' + new Date().getMonth()
-          : new Date().getMonth()
-      }-${
-        new Date().getDay() <= 9
-          ? '0' + new Date().getDay()
-          : new Date().getDay()
-      }`,
+      this.editing === true && this.date !== null
+        ? `${this.date.getFullYear()}-${
+            this.date.getMonth() + 1 <= 9
+              ? '0' + (this.date.getMonth() + 1)
+              : this.date.getMonth() + 1
+          }-${
+            this.date.getDate() <= 9
+              ? '0' + this.date.getDate()
+              : this.date.getDate()
+          }`
+        : `${new Date().getFullYear()}-${
+            new Date().getMonth() + 1 <= 9
+              ? '0' + (new Date().getMonth() + 1)
+              : new Date().getMonth() + 1
+          }-${
+            new Date().getDate() <= 9
+              ? '0' + new Date().getDate()
+              : new Date().getDate()
+          }`,
       [Validators.required]
     ),
-    amount: new FormControl(0, [Validators.required]),
-    payee: new FormControl('', [Validators.required]),
-    notes: new FormControl(''),
-    accountId: new FormControl('', [Validators.required]),
-    categoryId: new FormControl('', [Validators.required]),
+    amount: new FormControl(this.editing ? this.trans?.amount : 0, [
+      Validators.required,
+    ]),
+    payee: new FormControl(this.editing ? this.trans?.payee : '', [
+      Validators.required,
+    ]),
+    notes: new FormControl(this.editing ? this.trans?.notes : ''),
+    accountId: new FormControl(this.editing ? this.trans?.accountId : '', [
+      Validators.required,
+    ]),
+    categoryId: new FormControl(this.editing ? this.trans?.categoryId : '', [
+      Validators.required,
+    ]),
   });
 
   close() {
@@ -176,15 +217,29 @@ export class AddTransComponent {
   addTrans() {
     this.isSubmited.set(true);
     if (this.form.valid) {
-      this.transS.addTrans(
-        this.form.controls['amount'].value,
-        this.form.controls['payee'].value,
-        this.form.controls['accountId'].value,
-        this.form.controls['categoryId'].value,
-        this.form.controls['date'].value,
-        this.router.url,
-        this.form.controls['notes'].value
-      );
+      if (this.editing && this.trans !== undefined) {
+        this.transS.editTrans(
+          this.form.controls['amount'].value,
+          this.form.controls['payee'].value,
+          this.form.controls['accountId'].value,
+          this.form.controls['categoryId'].value,
+          this.form.controls['date'].value,
+          this.router.url,
+          this.trans.id,
+          this.form.controls['notes'].value
+        );
+      } else {
+        this.transS.addTrans(
+          this.form.controls['amount'].value,
+          this.form.controls['payee'].value,
+          this.form.controls['accountId'].value,
+          this.form.controls['categoryId'].value,
+          this.form.controls['date'].value,
+          this.router.url,
+          this.form.controls['notes'].value
+        );
+      }
+
       this._dialogRef.close();
     } else {
       if (this.form.controls['date'].hasError('required')) {

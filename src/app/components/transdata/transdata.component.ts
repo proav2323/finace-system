@@ -24,6 +24,7 @@ export class TransdataComponent {
       const dailogRef = this.dailog.open(AddTransComponent, {
         context: {
           user: this.user,
+          isEditing: false,
         },
         contentClass:
           'overflow-x-hidden overflow-y-scroll max-h-screen md:w-[40vw] lg:w-[30vw] w-[90vw] noScroll dark:text-white text-black',

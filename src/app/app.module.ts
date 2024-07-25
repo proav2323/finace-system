@@ -57,6 +57,8 @@ import {
   lucideArrowUpDown,
   lucideChevronDown,
   lucideChevronUp,
+  lucideDelete,
+  lucideEdit,
   lucideMoreHorizontal,
 } from '@ng-icons/lucide';
 import { BrnSelectImports, BrnSelectModule } from '@spartan-ng/ui-select-brain';
@@ -169,6 +171,8 @@ import { HlmDialogComponent } from '../lib/ui-dialog-helm/src/lib/hlm-dialog.com
       lucideChevronUp,
       lucideMoreHorizontal,
       lucideArrowUpDown,
+      lucideEdit,
+      lucideDelete,
     }),
   ],
   bootstrap: [AppComponent],

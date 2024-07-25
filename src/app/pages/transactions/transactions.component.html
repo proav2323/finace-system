@@ -8,28 +8,70 @@
 >
   <app-transdata></app-transdata>
   @if(transactions.length >= 1) {
-  <hlm-table>
+  <hlm-table class="w-full flex">
     <hlm-caption>Your Transactions</hlm-caption>
     <hlm-trow
       class="dark:bg-neutral-900 bg-neutral-200 rounded-t-md border-none"
     >
-      <hlm-th>Date</hlm-th>
-      <hlm-th>Category</hlm-th>
-      <hlm-th>Payee</hlm-th>
-      <hlm-th>Amount</hlm-th>
-      <hlm-th>Account</hlm-th>
-      <hlm-th></hlm-th>
+      <hlm-th class="flex-[0.16] w-full">Date</hlm-th>
+      <hlm-th class="flex-[0.16] w-full">Category</hlm-th>
+      <hlm-th class="flex-[0.16] w-full">Payee</hlm-th>
+      <hlm-th class="flex-[0.16] w-full">Amount</hlm-th>
+      <hlm-th class="flex-[0.16] w-full">Account</hlm-th>
+      <hlm-th class="flex-[0.16] w-full"></hlm-th>
     </hlm-trow>
     <hlm-trow
-      *ngFor="let transaction of transactions"
-      class="dark:bg-neutral-900 bg-neutral-200 rounded-b-md border-none"
+      *ngFor="let transaction of transactions; let i = index"
+      class="dark:bg-neutral-900 bg-neutral-200 {{
+        i === transactions.length - 1 ? 'rounded-b-md' : 'rounded-none'
+      }} border-none"
     >
-      <hlm-th>{{ transaction.date.toString() }}</hlm-th>
-      <hlm-th>{{ transaction.category.name }}</hlm-th>
-      <hlm-th>{{ transaction.payee }}</hlm-th>
-      <hlm-th class="">{{ transaction.amount }}</hlm-th>
-      <hlm-th>{{ transaction.account.name }}</hlm-th>
-      <hlm-th><hlm-icon name="lucideMoreHorizontal" size="{{ 14 }}" /></hlm-th>
+      <hlm-th class="flex-[0.16] w-full">{{ transaction.date | date }}</hlm-th>
+      <hlm-th class="flex-[0.16] w-full">{{
+        transaction.category.name
+      }}</hlm-th>
+      <hlm-th class="flex-[0.16] w-full">{{ transaction.payee }}</hlm-th>
+      <hlm-th
+        class="flex-[0.16] w-full {{
+          transaction.amount >= 0 ? 'text-green-700' : 'text-red-500'
+        }}"
+        >{{ transaction.amount }}</hlm-th
+      >
+      <hlm-th class="flex-[0.16] w-full">{{ transaction.account.name }}</hlm-th>
+      <hlm-th
+        class="flex-[0.16] w-full cursor-pointer {{
+          actLoading() ? 'opacity-50' : 'opacity-100'
+        }}"
+        [brnMenuTriggerFor]="menu"
+        ><hlm-icon name="lucideMoreHorizontal" size="{{ 14 }}"
+      /></hlm-th>
+      <ng-template #menu>
+        <hlm-menu class="w-56">
+          <hlm-menu-label>Transactions options</hlm-menu-label>
+
+          <hlm-menu-group>
+            <button
+              hlmMenuItem
+              [disabled]="actLoading()"
+              (click)="editDailog(transaction)"
+            >
+              <hlm-icon name="lucideEdit" hlmMenuIcon />
+              <span>Edit</span>
+            </button>
+
+            <button
+              hlmMenuItem
+              [disabled]="actLoading()"
+              (click)="delete(transaction.id)"
+            >
+              <hlm-icon name="lucideDelete" hlmMenuIcon />
+              <span>Delete</span>
+            </button>
+          </hlm-menu-group>
+
+          <hlm-menu-separator />
+        </hlm-menu>
+      </ng-template>
     </hlm-trow>
   </hlm-table>
   } @else {

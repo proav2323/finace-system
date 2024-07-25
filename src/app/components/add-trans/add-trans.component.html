@@ -1,7 +1,11 @@
 @if (user !== null) {
 <hlm-dialog-header>
-  <h3 hlmDialogTitle class="dark:text-white text-black">Add Transaction</h3>
-  <p hlmDialogDescription>add new Transactions</p>
+  <h3 hlmDialogTitle class="dark:text-white text-black">
+    {{ editing ? "Edit Transaction" : "Add Transaction" }}
+  </h3>
+  <p hlmDialogDescription>
+    {{ editing ? "chnage details of a transaction" : "Add a transaction" }}
+  </p>
 </hlm-dialog-header>
 
 <form
