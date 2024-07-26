@@ -6,6 +6,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { LoginGuard } from './guards/login.guard';
 import { RegisterComponent } from './pages/register/register.component';
 import { TransactionsComponent } from './pages/transactions/transactions.component';
+import { AccountComponent } from './pages/account/account.component';
 
 const routes: Routes = [
   { path: '', canActivate: [AuthGuard], component: HomeComponent },
@@ -18,6 +19,11 @@ const routes: Routes = [
   {
     path: 'transactions',
     component: TransactionsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'accounts',
+    component: AccountComponent,
     canActivate: [AuthGuard],
   },
 ];

@@ -93,6 +93,9 @@ import {
   HlmTrowComponent,
 } from '@spartan-ng/ui-table-helm';
 import { HlmDialogComponent } from '../lib/ui-dialog-helm/src/lib/hlm-dialog.component';
+import { AccountComponent } from './pages/account/account.component';
+import { AddAccountComponent } from './components/add-account/add-account.component';
+import { AddaccountDataComponent } from './components/addaccount-data/addaccount-data.component';
 
 @NgModule({
   declarations: [
@@ -108,6 +111,9 @@ import { HlmDialogComponent } from '../lib/ui-dialog-helm/src/lib/hlm-dialog.com
     TransactionsComponent,
     TransdataComponent,
     AddTransComponent,
+    AccountComponent,
+    AddAccountComponent,
+    AddaccountDataComponent,
   ],
   imports: [
     HlmAvatarImageDirective,

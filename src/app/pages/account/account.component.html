@@ -1,0 +1,80 @@
+@if (loading === true) {
+<div class="flex flex-col w-full justify-center items-center p-2">
+  <hlm-spinner></hlm-spinner>
+</div>
+} @else {
+<div
+  class="w-[90%] dark:bg-neutral-800 bg-white h-fit mx-auto shadow-lg rounded-md p-2 flex flex-col gap-2"
+>
+  <app-addaccount-data></app-addaccount-data>
+  @if(transactions.length >= 1) {
+  <hlm-table class="w-full flex">
+    <hlm-caption>Your Accounts</hlm-caption>
+    <hlm-trow
+      class="dark:bg-neutral-900 bg-neutral-200 rounded-t-md border-none"
+    >
+      <hlm-th class="flex-[33] w-full">name</hlm-th>
+      <hlm-th class="flex-[33] w-full">Created At</hlm-th>
+      <hlm-th class="flex-[33] w-full"></hlm-th>
+    </hlm-trow>
+    <hlm-trow
+      *ngFor="let transaction of transactions; let i = index"
+      class="dark:bg-neutral-900 bg-neutral-200 {{
+        i === transactions.length - 1 ? 'rounded-b-md' : 'rounded-none'
+      }} border-none"
+    >
+      <hlm-th class="flex-[0.33] w-full">{{ transaction.name }}</hlm-th>
+      <hlm-th class="flex-[0.33] w-full">{{
+        transaction.created_at | date
+      }}</hlm-th>
+
+      <hlm-th
+        class="flex-[0.33] w-full cursor-pointer {{
+          actLoading() ? 'opacity-50' : 'opacity-100'
+        }}"
+        [brnMenuTriggerFor]="menu"
+        ><hlm-icon name="lucideMoreHorizontal" size="{{ 14 }}"
+      /></hlm-th>
+      <ng-template #menu>
+        <hlm-menu class="w-56">
+          <hlm-menu-label>Account options</hlm-menu-label>
+
+          <hlm-menu-group>
+            <button
+              hlmMenuItem
+              [disabled]="actLoading()"
+              (click)="editDailog(transaction)"
+            >
+              <hlm-icon name="lucideEdit" hlmMenuIcon />
+              <span>Edit</span>
+            </button>
+
+            <button
+              hlmMenuItem
+              [disabled]="actLoading()"
+              (click)="delete(transaction.id)"
+            >
+              <hlm-icon name="lucideDelete" hlmMenuIcon />
+              <span>Delete</span>
+            </button>
+          </hlm-menu-group>
+
+          <hlm-menu-separator />
+        </hlm-menu>
+      </ng-template>
+    </hlm-trow>
+  </hlm-table>
+  } @else {
+
+  <hlm-table>
+    <hlm-trow
+      class="dark:bg-neutral-900 bg-neutral-200 rounded-t-md border-none"
+    >
+    </hlm-trow>
+    <hlm-trow class="dark:bg-neutral-900 bg-neutral-200 rounded-md border-none">
+      <hlm-th>No Results</hlm-th>
+    </hlm-trow>
+  </hlm-table>
+  }
+</div>
+}
