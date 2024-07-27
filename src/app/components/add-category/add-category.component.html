@@ -1,0 +1,43 @@
+@if (user !== null) {
+<hlm-dialog-header>
+  <h3 hlmDialogTitle class="dark:text-white text-black">
+    {{ editing ? "Edit Category" : "Add Category" }}
+  </h3>
+  <p hlmDialogDescription>
+    {{ editing ? "change details of a Categry" : "Add a Category" }}
+  </p>
+</hlm-dialog-header>
+
+<form
+  [formGroup]="form"
+  class="flex flex-col justify-center items-center w-full h-full gap-2"
+>
+  <div class="flex flex-col gap-1 justify-start items-start w-full">
+    <label hlmLabel class="w-full"
+      >Name
+      <input
+        class="w-full"
+        formControlName="name"
+        hlmInput
+        type="text"
+        placeholder="Name"
+      />
+    </label>
+    <div class="flex flex-col justify-start items-start w-full gap-2">
+      <span *ngIf="error().name !== ''" class="text-sm text-red-500">{{
+        error().name
+      }}</span>
+    </div>
+  </div>
+
+  <button
+    hlmBtn
+    class="w-full flex flex-row justify-center items-center gap-2"
+    (click)="addTrans()"
+  >
+    <hlm-spinner *ngIf="loading === true"></hlm-spinner>
+    Submit
+  </button>
+</form>
+
+}

@@ -96,6 +96,9 @@ import { HlmDialogComponent } from '../lib/ui-dialog-helm/src/lib/hlm-dialog.com
 import { AccountComponent } from './pages/account/account.component';
 import { AddAccountComponent } from './components/add-account/add-account.component';
 import { AddaccountDataComponent } from './components/addaccount-data/addaccount-data.component';
+import { AddCategoryComponent } from './components/add-category/add-category.component';
+import { CategoriesComponent } from './pages/categories/categories.component';
+import { CategoryDataComponent } from './components/category-data/category-data.component';
 
 @NgModule({
   declarations: [
@@ -114,6 +117,9 @@ import { AddaccountDataComponent } from './components/addaccount-data/addaccount
     AccountComponent,
     AddAccountComponent,
     AddaccountDataComponent,
+    AddCategoryComponent,
+    CategoriesComponent,
+    CategoryDataComponent,
   ],
   imports: [
     HlmAvatarImageDirective,
